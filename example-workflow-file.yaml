@@ -1,16 +1,14 @@
 on:
   pull_request:
-    types: [opened, reopened]
+    types: [opened, reopened, edited]
 
 jobs:
-  create-asana-attachment-job:
+  qa_url:
+    if: github.actor != 'dependabot[bot]' && !github.event.pull_request.draft
+    timeout-minutes: 1
     runs-on: ubuntu-latest
-    name: Create pull request attachments on Asana tasks
     steps:
-      - name: Create pull request attachments
-        uses: Asana/create-app-attachment-github-action@latest
-        id: postAttachment
+      - name: Link QA url to Asana
+        uses: crowdhouse/asana-qa-url@v1.0
         with:
           asana-secret: ${{ secrets.ASANA_SECRET }}
-      - name: Log output status
-        run: echo "Status is ${{ steps.postAttachment.outputs.status }}"
