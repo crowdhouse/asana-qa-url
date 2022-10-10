@@ -1,7 +1,7 @@
 {
-  "name": "create-app-attachment-github-action",
+  "name": "qa-url-action",
   "version": "1.0.0",
-  "description": "This action allows you to post your Pull Request as an attachment to the Asana task.",
+  "description": "This action allows you to add a QA URL to your description and have it added to your asana ticket",
   "main": "src/index.ts",
   "scripts": {
     "prepare": "husky install",
@@ -13,15 +13,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Asana/create-app-attachment-github-action.git"
+    "url": "git@github.com:crowdhouse/asana-qa-url.git"
   },
   "keywords": [],
   "author": "daniele.gili@crowdhouse.ch",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Asana/create-app-attachment-github-action/issues"
+    "url": "https://github.com/crowdhouse/asana-qa-url/issues"
   },
-  "homepage": "https://github.com/Asana/create-app-attachment-github-action#readme",
+  "homepage": "https://github.com/crowdhouse/asana-qa-url/blob/main/README.md",
   "dependencies": {
     "@actions/core": "^1.10.0",
     "@actions/github": "^5.1.1",
