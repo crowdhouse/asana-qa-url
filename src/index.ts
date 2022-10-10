@@ -20,6 +20,7 @@ const run = async () => {
     const results = []
 
     for(const ticketId of ticketURls) {
+      console.log(`Executing task for ${REQUESTS.ACTION_URL}/${ticketId}`)
       const result = await axios.put(`${REQUESTS.ACTION_URL}/${ticketId}`, {
         data: {
           custom_fields: {
