@@ -27,13 +27,13 @@ export const parseQaField = (
   body?: string
 ) => {
   if(!body) {
-    throw new Error(ERRORS.MISSING_QA_URL)
+    return null
   }
   const qa_url_regex = /QA URL: https:\/\/(.*)/i;
 
   let match = body.match(qa_url_regex)
   if(!match) {
-    throw new Error(ERRORS.MISSING_QA_URL)
+    return null
   }
   return `https://${match[1]}`
 };
@@ -42,17 +42,11 @@ export const parseTicketsUrl = (
   body?: string
 ) => {
   if(!body) {
-    throw new Error(ERRORS.MISSING_ASANA_URL)
+    return []
   }
 
   const asana_tickets_url_regex = /https:\/\/app\.asana\.com\/0\/(.*)\/([0-9]{16})(\/f)?/mg
-
-  let matchedIds = [...body.matchAll(asana_tickets_url_regex)].map(m => m[2])
-
-  if(!matchedIds.length) {
-    throw new Error(ERRORS.MISSING_ASANA_URL)
-  }
-  return matchedIds
+  return [...body.matchAll(asana_tickets_url_regex)].map(m => m[2])
 };
 
 export const isAxiosError = (e: any): e is AxiosError => e.isAxiosError;

@@ -14,8 +14,11 @@ const run = async () => {
     utils.validateProjectLists(allowedProjects, blockedProjects);
 
     const ticketURls = utils.parseTicketsUrl(context.payload.pull_request?.body)
-
     const qaUrl = utils.parseQaField(context.payload.pull_request?.body)
+
+    if(!ticketURls.length || !qaUrl) {
+      return setOutput("status", '200');
+    }
 
     const results = []
 

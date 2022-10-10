@@ -50,20 +50,10 @@ describe("validateProjectLists", () => {
 });
 
 describe("parseQaField", () => {
-    it("should throw an error if the QA URL is not present", () => {
-        expect(() => utils.parseQaField(' hello im some body QA URL')).toThrow(
-            ERRORS.MISSING_QA_URL
-        );
+    it("should return null if the QA URL is not present", () => {
+        expect(utils.parseQaField(' hello im some body QA URL')).toEqual(null)
     });
-    it("should not throw an error if the QA URL is correctly added", () => {
-        expect(() => utils.parseQaField('hello there QA URL: https://sometest.org')).not.toThrow();
-        expect(() => utils.parseQaField(`
-    hello 
-    multi line
-    QA URL: https://sometest.org
-    lalalaala
-    `)).not.toThrow();
-    });
+
     it("should return the right url", () => {
         expect(utils.parseQaField('hello there QA URL: https://sometest.org')).toMatch('sometest.org');
         expect(utils.parseQaField(`
@@ -72,25 +62,14 @@ describe("parseQaField", () => {
     QA URL: https://sometest.org
     also another url https://sometest2.org
     lalalaala
-    `)).toMatch('sometest.org');
+    `)).toEqual('https://sometest.org');
     });
 });
 
 describe("parseTicketsUrl", () => {
-    it("should throw an error if at least one Asana URL is not present", () => {
-        expect(() => utils.parseTicketsUrl('wef no asana ticket oh no qoefiw')).toThrow(
-            ERRORS.MISSING_ASANA_URL
-        );
-    });
-    it("should not throw an error if at least one Asana URL is correctly added", () => {
-        expect(() => utils.parseTicketsUrl('hello there https://app.asana.com/0/1201030213032611/1202320373824814')).not.toThrow();
-        expect(() => utils.parseTicketsUrl(`
-    hello 
-    multi line
-    https://app.asana.com/0/1201030213032611/1202320373824814/f
-    lalalaala
-    `)).not.toThrow();
-    });
+    it("should return an empty array if no asana urls are present", () => {
+        expect(utils.parseTicketsUrl('wef no asana ticket oh no qoefiw')).toEqual([]);
+    })
 
     it("should return an array of asana ids for each task added", () => {
         expect(utils.parseTicketsUrl('hello there QA URL: https://app.asana.com/0/1201030213032611/1202320373824814/f')).toEqual(['1202320373824814']);
