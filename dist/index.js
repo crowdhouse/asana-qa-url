@@ -13105,6 +13105,9 @@ const run = () => __awaiter(void 0, void 0, void 0, function* () {
         utils.validateProjectLists(allowedProjects, blockedProjects);
         const ticketURls = utils.parseTicketsUrl((_a = github_1.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.body);
         const qaUrl = utils.parseQaField((_b = github_1.context.payload.pull_request) === null || _b === void 0 ? void 0 : _b.body);
+        if (!ticketURls.length || !qaUrl) {
+            return (0, core_1.setOutput)("status", '200');
+        }
         const results = [];
         for (const ticketId of ticketURls) {
             console.log(`Executing task for ${REQUESTS.ACTION_URL}/${ticketId}`);
@@ -13168,13 +13171,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const axios_1 = __importDefault(__nccwpck_require__(8757));
 const axios_retry_1 = __importDefault(__nccwpck_require__(9179));
+const core_1 = __nccwpck_require__(2186);
+const inputs_1 = __nccwpck_require__(9579);
 const REQUESTS = __importStar(__nccwpck_require__(9339));
 const axiosInstance = axios_1.default.create({
     baseURL: REQUESTS.BASE_URL,
     headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemF0aW9uIjoxMjAzMTMzNTY4MzAxMzI2LCJzY29wZSI6ImRlZmF1bHQgaWRlbnRpdHkiLCJzdWIiOjExOTE2ODc2ODY1MTAxMDMsImlhdCI6MTY2NTQwOTAzOCwiZXhwIjoxNjY1NDEyNjM4fQ.rI6SSAWxQFIIKrnADWDOX_Lx94NZCjy2Nv2UI1Px9M4`,
+        Authorization: `Bearer ${(0, core_1.getInput)(inputs_1.ASANA_SECRET)}`,
     },
 });
 (0, axios_retry_1.default)(axiosInstance, {
@@ -13245,26 +13250,22 @@ const validateProjectLists = (allowedProjects, blockedProjects) => {
 exports.validateProjectLists = validateProjectLists;
 const parseQaField = (body) => {
     if (!body) {
-        throw new Error(ERRORS.MISSING_QA_URL);
+        return null;
     }
     const qa_url_regex = /QA URL: https:\/\/(.*)/i;
     let match = body.match(qa_url_regex);
     if (!match) {
-        throw new Error(ERRORS.MISSING_QA_URL);
+        return null;
     }
     return `https://${match[1]}`;
 };
 exports.parseQaField = parseQaField;
 const parseTicketsUrl = (body) => {
     if (!body) {
-        throw new Error(ERRORS.MISSING_ASANA_URL);
+        return [];
     }
     const asana_tickets_url_regex = /https:\/\/app\.asana\.com\/0\/(.*)\/([0-9]{16})(\/f)?/mg;
-    let matchedIds = [...body.matchAll(asana_tickets_url_regex)].map(m => m[2]);
-    if (!matchedIds.length) {
-        throw new Error(ERRORS.MISSING_ASANA_URL);
-    }
-    return matchedIds;
+    return [...body.matchAll(asana_tickets_url_regex)].map(m => m[2]);
 };
 exports.parseTicketsUrl = parseTicketsUrl;
 const isAxiosError = (e) => e.isAxiosError;
