@@ -21,9 +21,11 @@ const run = async () => {
 
     for(const ticketId of ticketURls) {
       const result = await axios.put(`${REQUESTS.ACTION_URL}/${ticketId}`, {
-        custom_fields: {
-          // gid of QA LINK field
-          "1202128969045528": qaUrl,
+        data: {
+          custom_fields: {
+            // gid of QA LINK field
+            "1132268250127115": qaUrl,
+          }
         }
       });
       results.push(result.status)

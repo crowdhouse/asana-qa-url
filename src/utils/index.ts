@@ -35,7 +35,7 @@ export const parseQaField = (
   if(!match) {
     throw new Error(ERRORS.MISSING_QA_URL)
   }
-  return match[1]
+  return `https://${match[1]}`
 };
 
 export const parseTicketsUrl = (
