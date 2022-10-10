@@ -9,7 +9,7 @@ const axiosInstance = axios.create({
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
-    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemF0aW9uIjoxMjAzMTMzNTY4MzAxMzI2LCJzY29wZSI6ImRlZmF1bHQgaWRlbnRpdHkiLCJzdWIiOjExOTE2ODc2ODY1MTAxMDMsImlhdCI6MTY2NTQwOTAzOCwiZXhwIjoxNjY1NDEyNjM4fQ.rI6SSAWxQFIIKrnADWDOX_Lx94NZCjy2Nv2UI1Px9M4`,
+    Authorization: `Bearer ${getInput(ASANA_SECRET)}`,
   },
 });
 
