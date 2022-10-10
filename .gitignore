@@ -16,5 +16,4 @@
 npm-debug.log*
 tsconfig.tsbuildinfo
 
-dist
 lib

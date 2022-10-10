@@ -2,13 +2,13 @@
   "name": "create-app-attachment-github-action",
   "version": "1.0.0",
   "description": "This action allows you to post your Pull Request as an attachment to the Asana task.",
-  "main": "src/index.ts",
+  "main": "dist/index.js",
   "scripts": {
     "prepare": "husky install",
     "build": "tsc",
     "test": "jest",
     "lint": "eslint src/**/*.ts",
-    "package": "ncc build --source-map --license licenses.txt",
+    "package": "ncc build --license licenses.txt",
     "test:coverage": "jest --collectCoverage=true"
   },
   "repository": {
