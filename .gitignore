@@ -1,0 +1,20 @@
+.idea
+.vscode
+.docker
+.nyc_output
+.terraform
+.cache
+
+# dependencies
+/node_modules
+.npmrc
+
+# misc
+.DS_Store
+
+# debug
+npm-debug.log*
+tsconfig.tsbuildinfo
+
+dist
+lib
