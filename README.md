@@ -19,7 +19,7 @@ Attach the action to your project as in:
     runs-on: ubuntu-latest
     steps:
       - name: Link QA url to Asana
-        uses: crowdhouse/asana-qa-url@v1.0
+        uses: crowdhouse/asana-qa-url@v1.1
         with:
           asana-secret: ${{ secrets.ASANA_SECRET }}
 ```
